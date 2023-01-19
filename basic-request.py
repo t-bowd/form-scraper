@@ -2,9 +2,9 @@ import requests
 import sys
 import time
 
-first_name = ""
-last_name = ""
-email = ""
+first_name = "gary"
+last_name = "gary"
+email = "gary@gary.c"
 url = "https://www.calibeach.com.au/wp-admin/admin-ajax.php"
 
 data = {
@@ -33,10 +33,10 @@ def send_request():
         print("Bad URL, try again")
         sys.exit()
     else:
-        print(r.response)
+        print(r.content)
         return True
 
 
 
 if __name__ == "__main__":
-    
+    send_request()
