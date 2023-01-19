@@ -9,7 +9,10 @@ session = HTMLSession()
 
 def get_all_forms(url):
     r = session.get(url)
-    r.html.render()
+    try:
+        r.html.render()
+    except:
+        print("Not JS")    
     soup = BeautifulSoup(r.html.html, "html.parser")
     return soup.find_all("form")
 
