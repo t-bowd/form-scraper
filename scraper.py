@@ -48,22 +48,25 @@ def get_form_details(form):
     return details
 
 def send_request(url, data):
-        try:
-            r = requests.post(url, data)
-            print(f"Payload sent: {data}")
-        except requests.exceptions.Timeout:
-            print("Timeout: Going to sleep for 60s")
-            time.sleep(60)
-            send_request(url, data)
-        except requests.exceptions.RequestException as e:
-            print("Catastrophic error: exiting")
-            raise SystemExit(e)
-        except requests.exceptions.TooManyRedirects:
-            print("Bad URL, try again")
-            sys.exit()
-        else:
-            print(r.content)
-            return True    
+    try:
+        r = requests.post(url, data)
+        #print(f"Payload sent: {data}")
+    except requests.exceptions.Timeout:
+        print("Timeout: Going to sleep for 60s")
+        time.sleep(60)
+        send_request(url, data)
+    except requests.exceptions.RequestException as e:
+        print("Catastrophic error: exiting")
+        raise SystemExit(e)
+    except requests.exceptions.TooManyRedirects:
+        print("Bad URL, try again")
+        sys.exit()
+    else:
+        print("="*100)
+        print("="*100)
+        print(r.content)
+        return True 
+           
 
 
 
@@ -100,7 +103,9 @@ if __name__ == "__main__":
             value = input(f"Enter the value for the field '{input_tag['name']}' (type: {input_tag['type']}): ")
             data[input_tag["name"]] = value
     if form_details["action"]:
-        url = form_details["action"]
+        request_url = form_details["action"]
     else:
-        url = "https://www.calibeach.com.au/wp-admin/admin-ajax.php"
-    send_request(url, data)                                                    
+        data["action"] = "elementor_pro_forms_send_form"
+        data["referrer"] = url
+        request_url = url + "/wp-admin/admin-ajax.php"
+    send_request(request_url, data)                                                    
