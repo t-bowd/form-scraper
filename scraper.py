@@ -1,11 +1,11 @@
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
+from urllib.parse import urlparse
 import sys
 import requests
 import time
 
 session = HTMLSession()
-#url = "https://www.calibeach.com.au/"
 
 def get_all_forms(url):
     r = session.get(url)
@@ -101,11 +101,11 @@ if __name__ == "__main__":
             data[input_tag["name"]] = value
         elif input_tag["type"] != "submit":
             value = input(f"Enter the value for the field '{input_tag['name']}' (type: {input_tag['type']}): ")
-            data[input_tag["name"]] = value
+            data[input_tag["name"]] = value       
     if form_details["action"]:
         request_url = form_details["action"]
     else:
         data["action"] = "elementor_pro_forms_send_form"
-        data["referrer"] = url
-        request_url = url + "/wp-admin/admin-ajax.php"
+        data["referrer"] = "http://" + urlparse(url).netloc
+        request_url = "http://" + urlparse(url).netloc + "/wp-admin/admin-ajax.php"
     send_request(request_url, data)                                                    
