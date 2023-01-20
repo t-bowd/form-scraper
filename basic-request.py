@@ -2,9 +2,9 @@ import requests
 import sys
 import time
 
-first_name = "gary"
-last_name = "gary"
-email = "gary@gary.c"
+first_name = "g"
+last_name = "g"
+email = "g@gary.c"
 url = "https://www.calibeach.com.au/wp-admin/admin-ajax.php"
 
 data = {

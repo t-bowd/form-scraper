@@ -53,7 +53,7 @@ def get_form_details(form):
 def send_request(url, data):
     try:
         r = requests.post(url, data)
-        #print(f"Payload sent: {data}")
+        print(f"Payload sent: {data}")
     except requests.exceptions.Timeout:
         print("Timeout: Going to sleep for 60s")
         time.sleep(60)
@@ -109,6 +109,6 @@ if __name__ == "__main__":
         request_url = form_details["action"]
     else:
         data["action"] = "elementor_pro_forms_send_form"
-        data["referrer"] = "http://" + urlparse(url).netloc
-        request_url = "http://" + urlparse(url).netloc + "/wp-admin/admin-ajax.php"
+        data["referrer"] = "https://" + urlparse(url).netloc
+        request_url = "https://" + urlparse(url).netloc + "/wp-admin/admin-ajax.php"    
     send_request(request_url, data)                                                    
